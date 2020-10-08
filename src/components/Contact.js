@@ -17,13 +17,13 @@ const classes = makeStyles((theme) => ({
 }));
 
 const align = {
-    display:'flex',
-    justifyContent:'center',
-    alignItems:'center'
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
 }
 
 const style = {
-    container:{
+    container: {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -33,8 +33,8 @@ const style = {
         overflow: 'hidden',
         background: '#29455D'
     },
-    homeContent:{
-        display:'flex',
+    homeContent: {
+        display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         background: '#FFF',
@@ -44,39 +44,39 @@ const style = {
     },
 };
 
-class Contact extends React.Component{
+class Contact extends React.Component {
 
     constructor(props) {
         super(props)
-            this.state = {
-                name: '', nameValid: null,
-                email: '', emailValid: null,
-                subject: '', subjectValid: null,
-                message: '', messageValid: null,
-                formValid: null,
-                errorMsg: {}
-            }
-            this.handleSubmit = this.handleSubmit.bind(this);
+        this.state = {
+            name: '', nameValid: null,
+            email: '', emailValid: null,
+            subject: '', subjectValid: null,
+            message: '', messageValid: null,
+            formValid: null,
+            errorMsg: {}
+        }
+        this.handleSubmit = this.handleSubmit.bind(this);
     };
 
 
     validateForm = () => {
-        
-        const {nameValid, emailValid, subjectValid, messageValid} = this.state;
+
+        const { nameValid, emailValid, subjectValid, messageValid } = this.state;
 
         this.setState({
             formValid: nameValid && emailValid && subjectValid && messageValid
         })
-        }
+    }
 
     updateName = (name) => {
-        this.setState({name}, this.validateName)
-        }
-    
+        this.setState({ name }, this.validateName)
+    }
+
     validateName = () => {
-        const {name} = this.state;
+        const { name } = this.state;
         let nameValid = true;
-        let errorMsg = {...this.state.errorMsg}
+        let errorMsg = { ...this.state.errorMsg }
 
         if (name.length < 3 && name.length > 0) {
             nameValid = false;
@@ -86,38 +86,38 @@ class Contact extends React.Component{
             errorMsg.name = false
         }
 
-    this.setState({nameValid, errorMsg}, this.validateForm)
+        this.setState({ nameValid, errorMsg }, this.validateForm)
     }
-    
+
     updateEmail = (email) => {
-        this.setState({email}, this.validateEmail)
+        this.setState({ email }, this.validateEmail)
     }
-    
+
     validateEmail = () => {
-    const {email} = this.state;
-    let emailValid = true;
-    let errorMsg = {...this.state.errorMsg}
+        const { email } = this.state;
+        let emailValid = true;
+        let errorMsg = { ...this.state.errorMsg }
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length > 0){
-        emailValid = false;
-        errorMsg.email = 'Invalid email format'
-    } else {
-        emailValid = true;
-        errorMsg.email = null
-    }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length > 0) {
+            emailValid = false;
+            errorMsg.email = 'Invalid email format'
+        } else {
+            emailValid = true;
+            errorMsg.email = null
+        }
 
-    this.setState({emailValid, errorMsg}, this.validateForm)
+        this.setState({ emailValid, errorMsg }, this.validateForm)
     }
 
     updateSubject = (subject) => {
-        this.setState({subject}, this.validateSubject)
+        this.setState({ subject }, this.validateSubject)
     }
-    
-        validateSubject = () => {
-        const {subject} = this.state;
+
+    validateSubject = () => {
+        const { subject } = this.state;
         let subjectValid = true;
-        let errorMsg = {...this.state.errorMsg}
-    
+        let errorMsg = { ...this.state.errorMsg }
+
         if (subject.length < 7 && subject.length > 0) {
             subjectValid = false;
             errorMsg.subject = 'Must be at least 7 characters long'
@@ -125,81 +125,57 @@ class Contact extends React.Component{
             subjectValid = true;
             errorMsg.subject = null
         }
-    
-        this.setState({subjectValid, errorMsg}, this.validateForm)
+
+        this.setState({ subjectValid, errorMsg }, this.validateForm)
     }
-    
+
     updateMessage = (message) => {
-        this.setState({message}, this.validateMessage)
+        this.setState({ message }, this.validateMessage)
     }
-        
+
     validateMessage = () => {
-    const {message} = this.state;
-    let messageValid = true;
-    let errorMsg = {...this.state.errorMsg}
+        const { message } = this.state;
+        let messageValid = true;
+        let errorMsg = { ...this.state.errorMsg }
 
-    if (message.length < 100 && message.length !== 0) {
-        messageValid = false;
-        errorMsg.message = 'Must be at least 50 characters long'
-    } else {
-        messageValid = true;
-        errorMsg.message = null
+        if (message.length < 100 && message.length !== 0) {
+            messageValid = false;
+            errorMsg.message = 'Must be at least 50 characters long'
+        } else {
+            messageValid = true;
+            errorMsg.message = null
+        }
+
+        this.setState({ messageValid, errorMsg }, this.validateForm);
     }
 
-    this.setState({messageValid, errorMsg}, this.validateForm);
-    }
-
-    resetForm(){
-        this.setState({name: "", email: "",subject:"", message:""})
+    resetForm() {
+        this.setState({ name: "", email: "", subject: "", message: "" })
     }
 
     handleSubmit(e) {
         e.preventDefault()
         const newState = this.state;
-        if(this.state !== ""){
+        if (this.state !== "") {
             console.log(newState)
             this.resetForm()
         }
     }
-    
-    
 
-    /*insertPost(event){
-        var _this = this;
-        event.preventDefault();
-        let form_data = new FormData();
-        form_data.append('name', $('.formName').val());
-        form_data.append('email', $('.formEmail').val());
-        form_data.append('subject', $('.formSubject').val());
-        form_data.append('message', $('formMessage').val());
-        $.ajax({
-            url: 'api/newMessage.php',
-            type: 'post',
-            dataType: 'text',
-            cache: false,
-            contentType: false,
-            processData: false,
-            data: form_data,
-            success: function(response){
-                this.resetForm();
-            }
-        })
-    }*/
 
-    
-    render(){
+    render() {
 
         //console.log(this.state)
-        
-        return(
+
+        return (
             <section style={style.container}>
                 <div >
                     <form
-                    style={style.homeContent}
-                    noValidate
-                    //autoComplete="off"
-                    method="POST"
-                    onSubmit={this.handleSubmit}
+                        style={style.homeContent}
+                        noValidate
+                        //autoComplete="off"
+                        method="POST"
+                        onSubmit={this.handleSubmit}
                     >
                         <div className={classes.root}>
                             <Grid
@@ -207,14 +183,14 @@ class Contact extends React.Component{
                                 spacing={3}
                             >
                                 <Grid item xs={6} style={align}>
-                                    
+
                                     <TextField
                                         required
                                         id="formName"
                                         value={this.state.name}
                                         label="Name"
                                         name="name"
-                                        style={{ margin: 8, width:'38vw', borderRadius: '2px' }}
+                                        style={{ margin: 8, width: '38vw', borderRadius: '2px' }}
                                         fullWidth
                                         margin="normal"
                                         InputLabelProps={{
@@ -233,7 +209,7 @@ class Contact extends React.Component{
                                         value={this.state.email}
                                         label="Email"
                                         name="mail"
-                                        style={{ margin: 8, width:'38vw', borderRadius: '2px' }}
+                                        style={{ margin: 8, width: '38vw', borderRadius: '2px' }}
                                         fullWidth
                                         margin="normal"
                                         InputLabelProps={{
@@ -252,7 +228,7 @@ class Contact extends React.Component{
                                         value={this.state.subject}
                                         label="Subject"
                                         name="subject"
-                                        style={{ margin: 8, width:'81vw', borderRadius: '2px' }}
+                                        style={{ margin: 8, width: '81vw', borderRadius: '2px' }}
                                         fullWidth
                                         margin="normal"
                                         InputLabelProps={{
@@ -271,7 +247,7 @@ class Contact extends React.Component{
                                         value={this.state.message}
                                         label="Message"
                                         name="message"
-                                        style={{ margin: 8, width:'81vw', borderRadius: '2px' }}
+                                        style={{ margin: 8, width: '81vw', borderRadius: '2px' }}
                                         fullWidth
                                         margin="normal"
                                         multiline
@@ -288,10 +264,9 @@ class Contact extends React.Component{
 
                                 <Button
                                     type="submit"
-                                    variant="contained" 
-                                    size="large" 
-                                    //onClick={() => { alert('clicked') }}
-                                    style={{margin:'0 auto', height: '5vh'}}
+                                    variant="contained"
+                                    size="large"
+                                    style={{ margin: '0 auto', height: '5vh' }}
                                     className={classes.margin}
                                 >
                                     SUBMIT
@@ -304,7 +279,7 @@ class Contact extends React.Component{
             </section>
         );
     }
-    
+
 }
 
 export default Contact;
